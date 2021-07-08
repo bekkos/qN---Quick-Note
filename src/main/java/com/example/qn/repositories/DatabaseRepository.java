@@ -65,6 +65,16 @@ public class DatabaseRepository {
         return (ArrayList<Note>) notebooks;
     }
 
+    public Note getNoteFromDatabase(int note_id) {
+        String sql = String.format("SELECT * FROM note WHERE id=%s", note_id);
+        return db.queryForObject(sql, new BeanPropertyRowMapper<>(Note.class));
+    }
+
+    public void updateNote(int note_id, String content) {
+        String sql = String.format("UPDATE note SET content='%s' WHERE id=%s", content, note_id);
+        db.update(sql);
+    }
+
 
 
 

@@ -101,14 +101,6 @@ public class Controller {
         return "index";
     }
 
-    @GetMapping("/notebooks")
-    public ArrayList<Notebook> getNotebooks(HttpSession session) {
-        return databaseRepository.getNotebooksFromDatabase((String) session.getAttribute("user_email"));
-    }
 
-    @GetMapping("/notes")
-    public ArrayList<Note> getNotebooks(@RequestParam int notebook_id, HttpSession session) {
-        return databaseRepository.getNotesFromDatabase(notebook_id);
-    }
 
 }
