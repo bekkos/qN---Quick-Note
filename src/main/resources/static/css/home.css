@@ -2,3 +2,33 @@
     width: 100%;
     height: 100%;
 }
+
+.container {
+    width:90%;
+    max-width: 340px;
+    min-height: 500px;
+    margin: 1vh auto;
+}
+
+.item {
+    width: 100%;
+    height: 53px;
+    background: #2D2924;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.item:hover {
+    background: #23211e;
+}
+
+.item h1 {
+    color: white;
+    font-size: 2rem;
+    line-height: 53px;
+    font-weight: 100;
+}
+

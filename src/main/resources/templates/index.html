@@ -13,8 +13,8 @@
 <div class="wrapper">
     <form action="/login" method="POST">
         <img src="images/lw.png" alt="">
-        <input type="text" name="email" class="form-control" placeholder="E-mail">
-        <input type="password" name="password" class="form-control" placeholder="Password">
+        <input type="text" name="email" class="form-control" placeholder="E-mail" required>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
         <button class="btn btn-success">Log in</button>
         <a href="/register">Click here to register.</a>
         <p th:if="${error}" th:text="${error}" class="error"></p>

@@ -8,12 +8,16 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="css/general.css" />
   <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="./javascript/home.js" defer>
 </head>
 <body>
 <div class="wrapper">
   <nav th:replace="nav"></nav>
-  <h2 th:text="${username}"></h2>
-
+  <div class="container" id="container">
+    <div class="item" id="">
+      <h1>Notebook #1</h1>
+    </div>
+  </div>
 </div>
 </body>
 </html>

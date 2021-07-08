@@ -1,21 +1,24 @@
 package com.example.qn.controllers;
 
+import com.example.qn.models.Note;
+import com.example.qn.models.Notebook;
 import com.example.qn.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.example.qn.respitories.UserRepository;
+import com.example.qn.repositories.DatabaseRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @org.springframework.stereotype.Controller
 public class Controller {
 
     @Autowired
-    UserRepository userDatabase;
+    DatabaseRepository databaseRepository;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -25,7 +28,7 @@ public class Controller {
 
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password, Model model, HttpSession session, HttpServletResponse response) {
-        if(userDatabase.checkCredentials(email, password)) {
+        if(databaseRepository.checkCredentials(email, password)) {
             session.setAttribute("user_email", email);
             session.setAttribute("logged_in", true);
             response.setHeader("Location", "/home");
@@ -45,16 +48,32 @@ public class Controller {
 
     @PostMapping("/register")
     public String register(@RequestParam String username, @RequestParam String email, @RequestParam String password, Model model, HttpServletResponse response, HttpSession session) {
-        if(userDatabase.checkIfEmailTaken(email)) {
+        if(databaseRepository.checkIfEmailTaken(email)) {
             model.addAttribute("error", "Email already taken.");
             return "register";
         }
 
         /* Input validation */
+        String spicyRegex = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+        boolean pass = true;
+        String errorMsg = "";
 
+        if(!username.matches(spicyRegex)) {
+            pass = false;
+            errorMsg = "Username does not meet the requirements.";
+        }
+        if(username == null || email == null || password == null) {
+            pass = false;
+            errorMsg = "Something went wrong, please try again.";
+        }
+        if(!pass) {
+            model.addAttribute("error", errorMsg);
+            return "register";
+        }
         /* --- */
+
         User user = new User(email, password, username);
-        userDatabase.addUser(user);
+        databaseRepository.addUser(user);
         session.setAttribute("logged_in", true);
         session.setAttribute("user_email", email);
         response.setHeader("Location", "/home");
@@ -65,7 +84,7 @@ public class Controller {
     @GetMapping("/home")
     public String home(HttpSession session, Model model, HttpServletResponse response) {
         if(session.getAttribute("logged_in") != null) {
-            model.addAttribute("username", userDatabase.getUserFromDatabase((String) session.getAttribute("user_email")).getUsername());
+            model.addAttribute("username", databaseRepository.getUserFromDatabase((String) session.getAttribute("user_email")).getUsername());
             return "home";
         } else {
             response.setHeader("Location", "/");
@@ -81,4 +100,15 @@ public class Controller {
         response.setStatus(302);
         return "index";
     }
+
+    @GetMapping("/notebooks")
+    public ArrayList<Notebook> getNotebooks(HttpSession session) {
+        return databaseRepository.getNotebooksFromDatabase((String) session.getAttribute("user_email"));
+    }
+
+    @GetMapping("/notes")
+    public ArrayList<Note> getNotebooks(@RequestParam int notebook_id, HttpSession session) {
+        return databaseRepository.getNotesFromDatabase(notebook_id);
+    }
+
 }

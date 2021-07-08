@@ -13,9 +13,9 @@
 <div class="wrapper">
   <form action="/register" method="POST">
     <img src="images/lw.png" alt="">
-    <input type="text" name="username" class="form-control" placeholder="Username">
-    <input type="text" name="email" class="form-control" placeholder="E-mail">
-    <input type="password" name="password" class="form-control" placeholder="Password">
+    <input type="text" name="username" class="form-control" placeholder="Username" required>
+    <input type="text" name="email" class="form-control" placeholder="E-mail" required>
+    <input type="password" name="password" class="form-control" placeholder="Password" required>
     <button class="btn btn-success">Register</button>
     <a href="/">Click here to log in.</a>
     <p th:if="${error}" th:text="${error}" class="error"></p>
