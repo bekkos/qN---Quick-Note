@@ -6,9 +6,8 @@
 .container {
     width:90%;
     max-width: 340px;
-    min-height: 500px;
+    min-height: 100px;
     margin: 1vh auto;
-    height: 100%;
 }
 
 .item {
@@ -29,7 +28,7 @@
 
 .item h1 {
     color: white;
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 53px;
     font-weight: 100;
 }
@@ -50,3 +49,17 @@ textarea {
     height: 100%;
 }
 
+.btnContainer {
+    width:90%;
+    min-height:130px;
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.newBtn {
+    margin: auto;
+    text-align: center;
+}

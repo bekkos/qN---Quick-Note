@@ -58,6 +58,14 @@ public class DatabaseRepository {
         return (ArrayList<Notebook>) notebooks;
     }
 
+    public Notebook getNotebookFromDatabase(int notebook_id) {
+
+        String sql = String.format("SELECT * FROM notebook WHERE id=%s", notebook_id);
+        Notebook notebook = db.queryForObject(sql, new BeanPropertyRowMapper<>(Notebook.class));
+
+        return notebook;
+    }
+
     public ArrayList<Note> getNotesFromDatabase(int notebook_id) {
         String sql = String.format("SELECT * FROM note WHERE notebook_id=%s", notebook_id);
         List<Note> notebooks = db.query(sql, new BeanPropertyRowMapper<>(Note.class));
@@ -72,6 +80,16 @@ public class DatabaseRepository {
 
     public void updateNote(int note_id, String content) {
         String sql = String.format("UPDATE note SET content='%s' WHERE id=%s", content, note_id);
+        db.update(sql);
+    }
+
+    public void addNotebook (String name, int owner_id) {
+        String sql = String.format("INSERT INTO notebook (name, owner_id) VALUES ('%s', %s)", name, owner_id);
+        db.update(sql);
+    }
+
+    public void addNote (String name, int notebook_id) {
+        String sql = String.format("INSERT INTO note (name, notebook_id) VALUES ('%s', %s)", name, notebook_id);
         db.update(sql);
     }
 
