@@ -22,8 +22,3 @@ CREATE TABLE note (
 
 INSERT INTO user (username, email, passwordHash) VALUES ('Admin', 'bekkosm@gmail.com', 'testpass');
 INSERT INTO user (username, email, passwordHash) VALUES ('Admin2', 'bekkosm2@gmail.com', 'testpass');
-INSERT INTO notebook (name, owner_id) VALUES ('Test Notebook 1', 1);
-INSERT INTO notebook (name, owner_id) VALUES ('Test Notebook 2', 1);
-INSERT INTO notebook (name, owner_id) VALUES ('Test Notebook 2', 2);
-INSERT INTO notebook (name, owner_id) VALUES ('Test Notebook 3', 1);
-INSERT INTO note (name, content, notebook_id) VALUES ('Test Note 1', 'ABCDEFG', 1);

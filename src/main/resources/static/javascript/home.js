@@ -18,13 +18,20 @@ function runOnLoad() {
     currentNotebookid = null;
     container.innerHTML = "";
     container.style.height = "auto";
-    for(let i = 0; i<notebooks.length; i++) {
-        container.innerHTML += `
+    if(notebooks.length != 0) {
+        for(let i = 0; i<notebooks.length; i++) {
+            container.innerHTML += `
             <div class="item" id="" onclick="getNotes(${notebooks[i]['id']})">
               <h1>${notebooks[i]['name']}</h1>
             </div>
         `;
+        }
+    } else {
+        container.innerHTML = `
+            <p style="text-align: center">There is nothing here. <br>Get started by creating a new notebook!</p>
+        `;
     }
+
 
 
     btnContainer.innerHTML = `
@@ -43,13 +50,20 @@ function getNotes(id) {
         notes = data;
     });
     container.innerHTML = "";
-    for(let i = 0; i<notes.length; i++) {
-        container.innerHTML += `
+    if(notes.length != 0) {
+        for(let i = 0; i<notes.length; i++) {
+            container.innerHTML += `
             <div class="item" id="" onclick="openNote(${notes[i]['id']})">
               <h1>${notes[i]['name']}</h1>
             </div>
         `;
+        }
+    } else {
+        container.innerHTML = `
+            <p style="text-align: center">Add a note to your notebook!</p>
+        `;
     }
+
     btnContainer.innerHTML = `
         <button class="btn btn-success newBtn" onclick="createNew(1);">Create new</button>
     `;
@@ -69,7 +83,7 @@ function openNote(id) {
     `;
     } else {
         container.innerHTML = `
-        <textarea id="content"></textarea>
+        <textarea id="content" placeholder="Start typing your note here."></textarea>
         <button class="btn btn-success" onclick="saveChanges(${selectedNote['id']})">Save</button>
     `;
     }
@@ -84,7 +98,7 @@ function saveChanges(id) {
         'content': content
     }
     $.post("/updateNote", data);
-    runOnLoad();
+    getNotes(currentNotebookid);
 }
 
 function createNew(id) {
@@ -92,8 +106,14 @@ function createNew(id) {
         // New Notebook
         container.innerHTML = "";
         container.innerHTML += `
-            <input id="name" style="color:black;" type="text" placeholder="Name" required>
-            <button class="btn btn-success" onclick="newNotebook();">Craete new</button>
+            <form autocomplete="off">
+                <input id="name" class="form-control" style="color:black; margin:auto;" type="text" placeholder="Name" required>
+                <br><br>
+                <button class="btn btn-success form-control" style="margin:auto;" onclick="newNotebook();">Create new</button>
+                <br>
+                <p id="errorMsg"></p>
+            </form>
+            
         `;
         btnContainer.innerHTML = "";
     }
@@ -102,8 +122,13 @@ function createNew(id) {
         // New Note
         container.innerHTML = "";
         container.innerHTML += `
-            <input id="name" style="color:black;" type="text" placeholder="Name" required>
-            <button class="btn btn-success" onclick="newNote();">Craete new</button>
+            <form autocomplete="off">
+                <input id="name" class="form-control" style="color:black; margin:auto;" type="text" placeholder="Name" required>
+                <br><br>
+                <button class="btn btn-success form-control" style="margin:auto;" onclick="newNote();">Create new</button>
+                <br>
+                <p id="errorMsg"></p>
+            </form>
         `;
         btnContainer.innerHTML = "";
     }
@@ -112,6 +137,11 @@ function createNew(id) {
 
 function newNotebook() {
     const name = document.getElementById("name").value;
+    if(name.length <= 0) {
+        let errorMsg = document.getElementById("errorMsg");
+        errorMsg.innerText = "Error: Name can not be empty.";
+        return;
+    }
     const url = "/newNotebook";
     data = {
         'name': name
@@ -123,6 +153,11 @@ function newNotebook() {
 
 function newNote() {
     const name = document.getElementById("name").value;
+    if(name.length <= 0) {
+        let errorMsg = document.getElementById("errorMsg");
+        errorMsg.innerText = "Error: Name can not be empty.";
+        return;
+    }
     const notebook_id = currentNotebookid;
     data = {
         'name': name,
