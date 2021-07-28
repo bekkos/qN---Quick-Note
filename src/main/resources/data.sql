@@ -6,17 +6,17 @@ CREATE TABLE user (
 );
 
 CREATE TABLE notebook (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    owner_id INT,
-    FOREIGN KEY (owner_id) REFERENCES user(id)
-);
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        owner_id INT,
+        FOREIGN KEY (owner_id) REFERENCES user(id)
+        );
 
 CREATE TABLE note (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    content VARCHAR,
-    notebook_id INT,
+                      id INT AUTO_INCREMENT PRIMARY KEY,
+                      name VARCHAR(255),
+                      content VARCHAR,
+                      notebook_id INT,
     FOREIGN KEY (notebook_id) REFERENCES notebook(id)
 );
 

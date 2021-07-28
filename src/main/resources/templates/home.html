@@ -8,11 +8,19 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="css/general.css" />
   <link rel="stylesheet" href="css/home.css" />
-
+  <script type="text/javascript" id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 </head>
 <body>
 <div class="wrapper">
   <nav th:replace="nav"></nav>
+  <br><br>
+  <div id="editor-controls">
+    <button class="btn btn-secondary" onclick="toggleLatexEditor();">LaTeX-editor</button>
+    <button class="btn btn-secondary">Bold</button>
+    <button class="btn btn-secondary">Italic</button>
+  </div>
   <div class="container" id="container">
 
   </div>

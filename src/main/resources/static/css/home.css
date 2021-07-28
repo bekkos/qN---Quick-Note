@@ -8,6 +8,12 @@
     max-width: 340px;
     min-height: 100px;
     margin: 1vh auto;
+
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
 }
 
 .item {
@@ -62,4 +68,14 @@ textarea {
 .newBtn {
     margin: auto;
     text-align: center;
+}
+
+#editor-controls {
+    display: none;
+    width: 340px;
+    justify-content: space-around;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: auto;
 }
